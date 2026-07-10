@@ -1,5 +1,7 @@
 # Base única padronizada e Dashboard — Instituições, Cursos, Títulos e Atribuições (CREA-BA)
 
+### 🔗 [Abrir o dashboard ao vivo](https://adinailson88.github.io/cursos-crea/dashboard/index.html)
+
 ## 1. Objetivo
 
 Consolidar em uma base única, normalizada e auditável as informações espalhadas em seis planilhas do Google Drive do CREA-BA sobre:
