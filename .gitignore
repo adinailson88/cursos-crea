@@ -1,0 +1,11 @@
+desktop.ini
+*.gsheet
+*.gmap
+.claude/
+__pycache__/
+*.pyc
+
+# exports xlsx brutos preservados apenas localmente (podem conter metadados
+# internos do relatorio SITAC no cabecalho); as versoes .csv equivalentes,
+# ja higienizadas, sao as usadas pelos scripts e versionadas.
+dados/fonte/*.xlsx

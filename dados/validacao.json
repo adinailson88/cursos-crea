@@ -1,0 +1,110 @@
+{
+  "resumo": {
+    "ok": 14,
+    "aviso": 3
+  },
+  "achados": [
+    {
+      "nivel": "ok",
+      "area": "IES",
+      "mensagem": "Nenhum id_ies duplicado (416 registros)",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "CAMPI",
+      "mensagem": "Nenhum id_campus duplicado (473 registros)",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "CURSOS",
+      "mensagem": "Nenhum id_curso duplicado (7 registros)",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "TITULOS_PROFISSIONAIS",
+      "mensagem": "Nenhum codigo_titulo duplicado (51 registros)",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "CURSO_TITULO",
+      "mensagem": "Nenhum id_curso_titulo duplicado (7 registros)",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "BASE_LEGAL",
+      "mensagem": "Nenhum id_norma duplicado (3 registros)",
+      "registro": ""
+    },
+    {
+      "nivel": "aviso",
+      "area": "IES",
+      "mensagem": "34 instituição(ões) com CNPJ inválido ou fictício de 416",
+      "registro": ""
+    },
+    {
+      "nivel": "aviso",
+      "area": "IES",
+      "mensagem": "192 instituição(ões) sem Código MEC de 416",
+      "registro": ""
+    },
+    {
+      "nivel": "aviso",
+      "area": "CAMPI",
+      "mensagem": "144 campus(i) sem município identificado de 473",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "CAMPI",
+      "mensagem": "0 coordenada(s) fora da faixa geográfica da Bahia",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "CURSOS",
+      "mensagem": "0 curso(s) sem campus válido de 7",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "CURSO_TITULO",
+      "mensagem": "0 vínculo(s) referenciando código de título inexistente",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "TITULOS_PROFISSIONAIS",
+      "mensagem": "0 código(s) de título duplicado(s) na aba principal (deveriam estar só em TITULOS_EQUIVALENCIAS)",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "BASE_LEGAL",
+      "mensagem": "0 norma(s) sem URL de fonte oficial de 3",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "TITULO_ATRIBUICAO_LEGAL",
+      "mensagem": "0 vínculo(s) de atribuição legal sem norma associada",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "BASE_DASHBOARD",
+      "mensagem": "0 registro(s) publicáveis com curso vinculado mas sem base legal validada",
+      "registro": ""
+    },
+    {
+      "nivel": "ok",
+      "area": "BASE_DASHBOARD",
+      "mensagem": "Planilha e dados.json com 475 registros — contagens batem",
+      "registro": ""
+    }
+  ]
+}

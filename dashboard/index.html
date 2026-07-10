@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CREA-BA — Consulta de Instituições, Cursos e Títulos</title>
+<meta name="description" content="Consulta pública de instituições de ensino, cursos, títulos profissionais e referências normativas cadastradas na base analisada do CREA-BA." />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <div class="wrap">
+    <h1>CREA-BA — Instituições, Cursos, Títulos e Atribuições</h1>
+    <p class="subtitulo">Consulta pública de instituições de ensino, cursos, títulos profissionais e referências normativas cadastradas na base analisada do CREA-BA.</p>
+    <div class="meta-linha">
+      <span>Última atualização: <strong id="meta-atualizacao">—</strong></span>
+      <span>Fonte institucional principal: <strong id="meta-fonte">Relatório Instituições (SITAC/CREA-BA)</strong></span>
+    </div>
+    <div class="aviso-legal" role="note">
+      <strong>Aviso:</strong> esta consulta não substitui certidão, decisão de Câmara Especializada ou análise formal do CREA-BA. Registros marcados como pendentes de validação ainda dependem de confirmação cadastral ou normativa.
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <section class="indicadores" aria-label="Indicadores gerais">
+    <div class="cartao"><div class="valor" id="ind-instituicoes">—</div><div class="rotulo">Instituições</div></div>
+    <div class="cartao"><div class="valor" id="ind-campi">—</div><div class="rotulo">Campi</div></div>
+    <div class="cartao"><div class="valor" id="ind-municipios">—</div><div class="rotulo">Municípios</div></div>
+    <div class="cartao"><div class="valor" id="ind-cursos">—</div><div class="rotulo">Cursos (registros)</div></div>
+    <div class="cartao"><div class="valor" id="ind-titulos">—</div><div class="rotulo">Títulos profissionais (catálogo)</div></div>
+    <div class="cartao"><div class="valor" id="ind-base-legal">—</div><div class="rotulo">Cursos com norma confirmada</div></div>
+    <div class="cartao alerta"><div class="valor" id="ind-pendencias">—</div><div class="rotulo">Pendências abertas</div></div>
+    <div class="cartao"><div class="valor" id="ind-completude">—</div><div class="rotulo">% completude cadastral</div></div>
+  </section>
+
+  <section class="painel-controles" aria-label="Pesquisa e filtros">
+    <div class="busca-geral">
+      <label for="busca" class="visually-hidden">Pesquisar por instituição, campus, município, curso, título, código, norma, artigo ou atribuição</label>
+      <input type="search" id="busca" placeholder="Pesquisar instituição, campus, município, curso, título, código, norma, artigo ou atribuição…" />
+      <button id="btn-limpar-busca" type="button">Limpar</button>
+    </div>
+
+    <div class="filtros-grid" id="filtros-grid">
+      <div class="filtro-campo"><label for="f-municipio">Município</label><select id="f-municipio"><option value="">Todos</option></select></div>
+      <div class="filtro-campo"><label for="f-instituicao">Instituição</label><select id="f-instituicao"><option value="">Todas</option></select></div>
+      <div class="filtro-campo"><label for="f-curso">Curso</label><select id="f-curso"><option value="">Todos</option></select></div>
+      <div class="filtro-campo"><label for="f-titulo">Título profissional</label><select id="f-titulo"><option value="">Todos</option></select></div>
+      <div class="filtro-campo"><label for="f-modalidade">Modalidade de oferta</label><select id="f-modalidade"><option value="">Todas</option></select></div>
+      <div class="filtro-campo"><label for="f-grau">Grau acadêmico</label><select id="f-grau"><option value="">Todos</option></select></div>
+      <div class="filtro-campo"><label for="f-categoria">Categoria acadêmica</label><select id="f-categoria"><option value="">Todas</option></select></div>
+      <div class="filtro-campo"><label for="f-natureza">Natureza administrativa</label><select id="f-natureza"><option value="">Todas</option></select></div>
+      <div class="filtro-campo"><label for="f-situacao-curso">Situação do curso</label><select id="f-situacao-curso"><option value="">Todas</option></select></div>
+      <div class="filtro-campo"><label for="f-situacao-cadastral">Situação cadastral</label><select id="f-situacao-cadastral"><option value="">Todas</option></select></div>
+      <div class="filtro-campo"><label for="f-status-legal">Status de validação normativa</label><select id="f-status-legal"><option value="">Todos</option></select></div>
+    </div>
+
+    <div class="linha-acoes">
+      <label class="checkbox-publicavel">
+        <input type="checkbox" id="f-somente-publicaveis" checked />
+        Mostrar somente registros publicáveis (ocultar pendentes de revisão cadastral)
+      </label>
+      <div class="botoes">
+        <button id="btn-limpar-filtros" type="button">Limpar filtros</button>
+        <button id="btn-exportar-csv" type="button" class="primario">Exportar CSV</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="conteudo-principal">
+    <div class="painel" aria-label="Mapa da Bahia">
+      <h2>Mapa por município</h2>
+      <div id="mapa" role="application" aria-label="Mapa interativo do Estado da Bahia com municípios cadastrados"></div>
+      <div class="legenda-mapa">
+        <span><i class="pip validado"></i> Registro validado (norma confirmada)</span>
+        <span><i class="pip parcial"></i> Parcialmente validado</span>
+        <span><i class="pip pendente"></i> Pendente de validação</span>
+      </div>
+      <div class="aviso-sem-coordenada" id="aviso-sem-coordenada" hidden>
+        Existem registros cadastrados sem localização geográfica validada.
+      </div>
+    </div>
+
+    <div class="painel" aria-label="Tabela de registros">
+      <h2>Registros (instituição · campus · curso · título)</h2>
+      <div class="tabela-toolbar">
+        <span id="contagem-resultados">—</span>
+        <span id="pagina-info"></span>
+      </div>
+      <div class="tabela-wrap">
+        <table class="tabela-registros" id="tabela" aria-describedby="contagem-resultados">
+          <thead>
+            <tr id="linha-cabecalho"></tr>
+          </thead>
+          <tbody id="corpo-tabela"></tbody>
+        </table>
+      </div>
+      <div class="paginacao">
+        <button id="btn-pag-anterior" type="button">« Anterior</button>
+        <span id="pag-atual">Página 1</span>
+        <button id="btn-pag-proxima" type="button">Próxima »</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p>Dados derivados de relatórios do SITAC/CREA-BA e de fontes públicas oficiais citadas em cada registro (ver README.md e RELATORIO_VALIDACAO.md do projeto). Painel gerado automaticamente a partir de <code>dados/dados.json</code> — não representa validação jurídica definitiva.</p>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" id="modal">
+    <button class="fechar" id="btn-fechar-modal" type="button" aria-label="Fechar detalhes">✕ Fechar</button>
+    <h2 id="modal-titulo">Detalhe do registro</h2>
+    <dl id="modal-corpo"></dl>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="app.js"></script>
+</body>
+</html>
