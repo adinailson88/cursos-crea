@@ -2,6 +2,16 @@
 
 ### 🔗 [Abrir o dashboard ao vivo](https://adinailson88.github.io/cursos-crea/dashboard/index.html)
 
+### 📊 Tabela editável (fonte que alimenta o dashboard)
+
+| | |
+|---|---|
+| 🏫 **Instituições e campi** (CNPJ, Código MEC, campus, categoria) | [Ver/editar tabela](https://github.com/adinailson88/cursos-crea/blob/master/dados/fonte/Relatorio_Instituicoes.csv) |
+| 🎓 **Títulos profissionais** (código, tratamento, nível) | [Ver/editar tabela](https://github.com/adinailson88/cursos-crea/blob/master/dados/fonte/Titulos_SITAC.csv) |
+| ▶️ **Atualizar o dashboard depois de editar** | [Rodar o Action "Atualizar dashboard CREA-BA"](https://github.com/adinailson88/cursos-crea/actions/workflows/atualizar_dashboard.yml) → botão **Run workflow** |
+
+Para editar: abra a tabela acima, clique no ícone de lápis (✏️ *Edit*) no canto superior direito do GitHub, altere a célula/linha necessária (ex. corrigir um CNPJ, preencher um Código MEC, corrigir um município) e clique em **Commit changes**. Isso já dispara a atualização automática do dashboard (o Action também roda sozinho a cada alteração nessas tabelas); se quiser forçar manualmente, use o botão **Run workflow** do link acima.
+
 ## 1. Objetivo
 
 Consolidar em uma base única, normalizada e auditável as informações espalhadas em seis planilhas do Google Drive do CREA-BA sobre:

@@ -2,11 +2,22 @@
 
 Fluxo operacional para atualizar a base e o dashboard quando novos dados chegarem do CREA-BA (ex.: relatório de cursos extraído do SITAC, novas planilhas de instituições, revisão de pendências).
 
+## 0. Edição rápida de uma pendência pontual (via navegador, sem instalar nada)
+
+Para corrigir um dado cadastral específico (ex.: preencher um CNPJ ou Código MEC faltante, corrigir a grafia de um município, ajustar uma categoria):
+
+1. Abra a tabela correspondente no GitHub: [`dados/fonte/Relatorio_Instituicoes.csv`](https://github.com/adinailson88/cursos-crea/blob/master/dados/fonte/Relatorio_Instituicoes.csv) (instituições/campi) ou [`dados/fonte/Titulos_SITAC.csv`](https://github.com/adinailson88/cursos-crea/blob/master/dados/fonte/Titulos_SITAC.csv) (títulos profissionais).
+2. Clique no ícone de lápis (✏️) no canto superior direito para editar.
+3. Corrija a célula/linha necessária (mantendo a estrutura de colunas) e clique em **Commit changes...** direto na branch `master`.
+4. O [Action "Atualizar dashboard CREA-BA"](https://github.com/adinailson88/cursos-crea/actions/workflows/atualizar_dashboard.yml) dispara sozinho a cada alteração em `dados/fonte/` ou `scripts/`, roda os três scripts abaixo e publica o resultado. Se quiser forçar manualmente, clique em **Run workflow** nesse link.
+5. Em 1–2 minutos o GitHub Pages republica e o dashboard já reflete a mudança.
+
+Isso cobre correções pontuais de dado cadastral. Para trocas grandes de fonte (nova extração completa do SITAC) ou para editar normas/base legal, siga o fluxo completo abaixo (passos 1–9), que também pode ser rodado localmente.
+
 ## 1. Atualizar dados de origem
 
-- Substitua ou adicione os arquivos correspondentes em `dados/fonte/` (formato CSV, UTF-8).
+- Substitua ou adicione os arquivos correspondentes em `dados/fonte/` (formato CSV, UTF-8) — pela edição rápida acima (passo 0) ou substituindo o arquivo inteiro localmente.
 - Se o novo arquivo vier do Google Drive como planilha nativa, exporte como CSV (`Arquivo → Fazer download → Valores separados por vírgula`), preservando o cabeçalho original.
-- Nunca edite `dados/fonte/*.csv` manualmente para "corrigir" um dado — isso deve ser feito na normalização (`gerar_base.py`) ou anotado como pendência. `dados/fonte/` é o registro bruto para auditoria.
 - Se houver um relatório de cursos completo do SITAC, salve-o como `dados/fonte/Cursos_SITAC.csv` com colunas equivalentes a: instituição, campus, curso, situação, modalidade, título/código, ato de registro — e ajuste `scripts/gerar_base.py` (seção 5, `CURSOS + CURSO_TITULO`) para lê-lo em vez do `Consolidado_EXEMPLO.csv`.
 
 ## 2. Executar a normalização
