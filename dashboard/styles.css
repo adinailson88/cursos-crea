@@ -288,6 +288,24 @@ table.tabela-registros tbody tr:nth-child(even) { background: #fafbfc; }
 .selo.pendente { background: var(--vermelho-bg); color: var(--vermelho); }
 .selo.pendente::before { background: var(--vermelho); }
 
+.mensagem-vazia {
+  background: var(--amarelo-bg);
+  color: var(--amarelo);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+.mensagem-vazia button {
+  margin-top: 0.5rem;
+}
+
+.popup-municipio .btn-filtrar {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.6rem;
+}
+
 .paginacao {
   display: flex;
   justify-content: center;
@@ -306,7 +324,7 @@ table.tabela-registros tbody tr:nth-child(even) { background: #fafbfc; }
   align-items: flex-start;
   justify-content: center;
   padding: 3rem 1rem;
-  z-index: 200;
+  z-index: 5000; /* acima dos panes/controles do Leaflet (ate ~1000) */
 }
 .modal-overlay[hidden] { display: none; }
 .modal {

@@ -161,6 +161,35 @@
     const aviso = document.getElementById("aviso-sem-coordenada");
     const semCoord = estado.filtrados.some((r) => r.publicar_dashboard === "SIM" && !r.latitude && r.municipio === "");
     aviso.hidden = !semCoord;
+
+    const msg = document.getElementById("mensagem-vazia");
+    if (estado.filtrados.length > 0) {
+      msg.hidden = true;
+      msg.innerHTML = "";
+      return;
+    }
+    const filtroDeCurso = ["nome_curso", "titulo_profissional", "modalidade_oferta", "grau_academico", "situacao_curso"]
+      .some((c) => estado.filtros[c]);
+    let texto;
+    if (estado.somentePublicaveis && filtroDeCurso) {
+      texto = "Nenhum registro publicável corresponde a esse filtro. Os cursos hoje cadastrados são apenas 7 registros de <strong>exemplo</strong> (ver RELATORIO_VALIDACAO.md) e ainda não estão marcados como publicáveis — desmarque “mostrar somente registros publicáveis” para visualizá-los.";
+    } else if (estado.somentePublicaveis) {
+      texto = "Nenhum registro publicável corresponde a esse filtro. Tente desmarcar “mostrar somente registros publicáveis” ou ajustar os filtros.";
+    } else {
+      texto = "Nenhum registro corresponde aos filtros selecionados.";
+    }
+    msg.innerHTML = texto + (estado.somentePublicaveis
+      ? ' <button type="button" id="btn-mostrar-todos">Mostrar também pendentes</button>'
+      : "");
+    msg.hidden = false;
+    const btn = document.getElementById("btn-mostrar-todos");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        document.getElementById("f-somente-publicaveis").checked = false;
+        estado.somentePublicaveis = false;
+        aplicarFiltros();
+      });
+    }
   }
 
   // ---------------------------------------------------------------------
@@ -302,7 +331,7 @@
   const BAHIA_BOUNDS = L.latLngBounds([-18.35, -46.7], [-8.5, -37.3]);
 
   function inicializarMapa() {
-    estado.mapa = L.map("mapa", { scrollWheelZoom: false });
+    estado.mapa = L.map("mapa", { scrollWheelZoom: true });
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; colaboradores do OpenStreetMap",
       maxZoom: 18,
@@ -359,6 +388,7 @@
       }
       html += `</details>`;
     });
+    html += `<button type="button" class="btn-filtrar">Filtrar tabela por este município</button>`;
     html += `</div>`;
     return html;
   }
@@ -389,10 +419,18 @@
         fillOpacity: 0.85,
       });
       marker.bindPopup(popupHtml(grupo));
-      marker.on("click", () => {
-        estado.municipioSelecionado = estado.municipioSelecionado === nomeMunicipio ? "" : nomeMunicipio;
-        document.getElementById("f-municipio").value = estado.municipioSelecionado;
-        aplicarFiltros();
+      // O clique no marcador so abre o popup (comportamento padrao do Leaflet).
+      // O filtro da tabela so e aplicado se o usuario clicar explicitamente no
+      // botao "Filtrar tabela por este município" dentro do popup.
+      marker.on("popupopen", (e) => {
+        const btn = e.popup.getElement().querySelector(".btn-filtrar");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            estado.municipioSelecionado = nomeMunicipio;
+            document.getElementById("f-municipio").value = nomeMunicipio;
+            aplicarFiltros();
+          });
+        }
       });
       marker.addTo(estado.mapa);
       estado.marcadores.set(nomeMunicipio, marker);
