@@ -28,10 +28,9 @@ Este painel é uma ferramenta de consulta e transparência. **Não substitui cer
 ## 2. Estrutura de arquivos
 
 ```
-Tabelas COREC/
+.
 ├── dados/
 │   ├── fonte/              # exports brutos das 6 planilhas do Drive (CSV) + referência de municípios IBGE
-│   ├── processados/        # arquivos intermediários (vazio em uso normal)
 │   ├── dados.json          # gerado por scripts/gerar_json.py — consumido pelo dashboard
 │   └── validacao.json      # gerado por scripts/validar_dados.py
 ├── planilha/
@@ -39,12 +38,13 @@ Tabelas COREC/
 ├── dashboard/
 │   ├── index.html
 │   ├── styles.css
-│   ├── app.js
-│   └── assets/
+│   └── app.js
 ├── scripts/
 │   ├── gerar_base.py       # dados/fonte/*.csv -> planilha/Base_IES_Cursos_CREA_BA.xlsx
 │   ├── gerar_json.py       # planilha -> dados/dados.json
 │   └── validar_dados.py    # checagens automáticas -> dados/validacao.json
+├── .github/
+├── index.html               # redireciona para dashboard/index.html
 ├── README.md
 ├── INSTRUCOES_ATUALIZACAO.md
 └── RELATORIO_VALIDACAO.md
@@ -88,8 +88,9 @@ Princípios aplicados (detalhados em `scripts/gerar_base.py`): nada é inventado
 
 Pré-requisitos: Python 3.10+ com `openpyxl` (`pip install openpyxl`).
 
+A partir da raiz do repositório:
+
 ```bash
-cd "Tabelas COREC"
 python scripts/gerar_base.py      # dados/fonte/*.csv -> planilha/Base_IES_Cursos_CREA_BA.xlsx
 python scripts/gerar_json.py      # planilha -> dados/dados.json
 python scripts/validar_dados.py   # checagens -> dados/validacao.json
@@ -99,19 +100,16 @@ python scripts/validar_dados.py   # checagens -> dados/validacao.json
 
 Navegadores bloqueiam `fetch()` em arquivos `file://`. É necessário servir a pasta por HTTP:
 
+A partir da raiz do repositório:
+
 ```bash
-cd "Tabelas COREC"
 python -m http.server 8000
 # abrir http://localhost:8000/dashboard/index.html
 ```
 
 ## 7. Publicação
 
-O dashboard é estático (HTML/CSS/JS + `dados.json`) e pode ser publicado em:
-
-- **GitHub Pages**: publicar a pasta `Tabelas COREC/` (ou só `dashboard/` + `dados/`, ajustando o caminho `../dados/dados.json` em `app.js`) na branch do Pages;
-- **Google Sites** (incorporação via iframe apontando para a URL publicada);
-- qualquer servidor estático.
+O dashboard é estático (HTML/CSS/JS + `dados.json`). Já está publicado via **GitHub Pages**: o `index.html` da raiz redireciona para `dashboard/index.html`, e o link no topo deste README aponta direto para a URL pública. O mesmo conteúdo estático também pode ser incorporado em outra página (ex. **Google Sites**, via iframe apontando para a URL publicada) ou servido por qualquer servidor estático, sem alteração de estrutura.
 
 Bibliotecas externas usadas via CDN (documentadas): [Leaflet 1.9.4](https://leafletjs.com/) (mapa) + tiles do OpenStreetMap.
 

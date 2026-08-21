@@ -22,8 +22,9 @@ Isso cobre correções pontuais de dado cadastral. Para trocas grandes de fonte 
 
 ## 2. Executar a normalização
 
+A partir da raiz do repositório:
+
 ```bash
-cd "Tabelas COREC"
 python scripts/gerar_base.py
 ```
 
