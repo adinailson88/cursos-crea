@@ -109,7 +109,7 @@ python -m http.server 8000
 
 ## 7. Publicação
 
-O dashboard é estático (HTML/CSS/JS + `dados.json`) e já está publicado via **GitHub Pages**, servindo a raiz do repositório na branch `master`; o `index.html` da raiz redireciona para `dashboard/index.html`. O mesmo conteúdo estático também pode ser incorporado em outra página (ex. **Google Sites**, via iframe apontando para a URL publicada) ou servido por qualquer servidor estático, sem alteração de estrutura.
+O dashboard é estático (HTML/CSS/JS + `dados.json`). Já está publicado via **GitHub Pages**: o `index.html` da raiz redireciona para `dashboard/index.html`, e o link no topo deste README aponta direto para a URL pública. O mesmo conteúdo estático também pode ser incorporado em outra página (ex. **Google Sites**, via iframe apontando para a URL publicada) ou servido por qualquer servidor estático, sem alteração de estrutura.
 
 Bibliotecas externas usadas via CDN (documentadas): [Leaflet 1.9.4](https://leafletjs.com/) (mapa) + tiles do OpenStreetMap.
 
